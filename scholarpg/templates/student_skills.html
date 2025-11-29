@@ -1,0 +1,44 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+
+<div class="headline-div">
+    <h2>Student Skills</h2>
+    <form class="form-button" action="/add_skill_form">
+        <button type="submit">Add Skill</button>
+    </form>
+</div>
+<div class="cards">
+{% for skill in skills %}
+    <div class="card">
+        <p class="card-title">{{ skill.title }}</p>
+        <p class="card-desc">{{skill.desc}}</p>
+        <div class="card-pieces">
+            <div>
+                <p>Class</p>
+                <p> {{skill.charClass}}</p>
+            </div>
+            <div>
+                <p>SP</p>
+                <p> {{skill.sp}}</p>
+            </div>
+            <div>
+                <p>LVL</p>
+                <p> {{skill.levelReq}}</p>
+            </div>
+        </div>
+        
+        <div class="button-div">
+            <form class="form-button" action="../../update_skill_form/{{skill.pk}}">
+                <button type="submit">Update</button>
+            </form>
+            <form class="form-button" action="../../delete_skill_form/{{skill.pk}}">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+
+{% endblock %}

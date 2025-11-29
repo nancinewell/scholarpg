@@ -1,0 +1,29 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<div class="headline-div">
+    <h2>Today's Miracle!</h2>
+    <form class="form-button" action="/view_miracles">
+        <button type="submit">All Miracles</button>
+    </form>
+</div>
+<div class="random-event">
+<p class="card-title">{{miracle.title}}</p>
+<p>{{miracle.desc}}</p>
+
+<div class="card-pieces">
+    <div>
+        <p>XP</p>
+        <p>{{miracle.xp}}</p>
+    </div>
+    <div>
+        <p>GP</p>
+        <p> {{miracle.gp}}</p>
+    </div>
+    <div>
+        <p>SP</p>
+        <p> {{miracle.sp}}</p>
+    </div>        
+</div>
+</div>
+{% endblock %}

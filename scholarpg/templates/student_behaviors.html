@@ -1,0 +1,40 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+
+<div class="headline-div">
+    <h2>Student Behaviors</h2>
+    <form class="form-button" action="/add_behavior_form">
+        <button type="submit">Add Behavior</button>
+    </form>
+</div>
+<div class="cards">
+{% for behavior in behaviors %}
+    <div class="card">
+        <p class="card-title">{{ behavior.title }} {{student.level}}</p>
+        <p class="card-desc">{{behavior.desc}}</p>
+        <div class="card-pieces">
+            <div>
+                <p>XP</p>
+                <p> {{behavior.xp}}</p>
+            </div>
+            <div>
+                <p>GP</p>
+                <p> {{behavior.gp}}</p>
+            </div>
+        </div>
+        <div class="button-div">
+            <form class="form-button" action="../../update_behavior_form/{{behavior.pk}}">
+                <button type="submit">Update</button>
+            </form>
+            <form class="form-button" action="../../delete_behavior_form/{{behavior.pk}}">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+
+{% endblock %}
+

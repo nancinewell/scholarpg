@@ -1,0 +1,82 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<h2>Student</h2>
+<div>
+    <div class="student-display">
+        <p class="student-display-name">Name: {{ student.name }}</p>
+        <p class="student-display-level">Level:  {{student.level}}</p>
+        <p class="student-display-charClass">Class: {{student.charClass}}</p>
+        <img src="../static/img/avatars/{{student.image}}.jpg" class="student-display-image">
+        <div class="student-display-stats">
+            <p>XP: {{student.xp}}</p>
+            <p>GP: {{student.gp}}</p>
+            <p>SP: {{student.sp}}</p>
+        </div>
+    </div>
+    <div class="button-div">
+        <form class="form-button" action="../../update_student_form/{{student.pk}}">
+            <button type="submit">Update Student</button>
+        </form>
+        <form class="form-button" action="../../delete_student_form/{{student.pk}}">
+            <button type="submit">Delete Student</button>
+        </form>
+    </div>
+    <div class="two-list-div">
+        <div class="list">
+            <h3 class="view-student-header">Behaviors</h3>
+            {% for behavior in behaviors %}
+            <div class="list-item">
+                <form  action="../../award_behavior/" method="POST">
+                    {% csrf_token %}
+                    <p class="list-item-title">{{ behavior.title }}</p>
+                    <p class="list-item-desc">{{behavior.desc}}</p>
+                    <div class="card-pieces">
+                        <div>
+                            <p>XP</p>
+                            <p>{{behavior.xp}}</p>
+                        </div>
+                        <div>
+                            <p>GP</p>
+                            <p>{{behavior.gp}}</p>
+                        </div>
+                        <input class="noshow" name="bpk" id="bpk" value="{{behavior.pk}}">
+                    <input class="noshow" name="spk" value="{{student.pk}}">
+                    <button class="list-button" type="submit">&#10004;</button>
+                    </div>                     
+                </form>
+            </div>
+        {% endfor %}
+        </div> 
+        <div class="list">
+            <h3 class="view-student-header">Skills</h3>
+            {% for skill in skills %}
+                {% if skill.levelReq <= student.level %}
+                <div class="list-item">
+                        <form  action="../../use_skill/" method="POST">
+                            {% csrf_token %}
+                            <p class="list-item-title">{{ skill.title }}</p>
+                            <p class="list-item-title">{{ skill.desc }}</p>
+                            <div class="card-pieces">
+                                <div>
+                                    <p>SP</p>
+                                    <p>{{skill.sp}}</p>
+                                </div>
+                                <div>
+                                    <p>LVL</p>
+                                    <p>{{skill.levelReq}}</p>
+                                </div>
+                                <input class="noshow" name="skillpk" value="{{skill.pk}}">
+                                <input class="noshow" name="spk" value="{{student.pk}}">
+                                <button class="list-button" type="submit">&#10004;</button>
+                            </div>
+                            
+                        </form>
+                    <p class="behavior-list-item-desc">{{behavior.desc}}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+
+{% endblock %} 

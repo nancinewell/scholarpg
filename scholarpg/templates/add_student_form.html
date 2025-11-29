@@ -1,0 +1,23 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<h2>Add Student</h2>
+<form action="../add_student/" method="POST">
+    {% csrf_token %}
+    <label for="name">Student Name</label>
+    <input name="name" id="name" type="text" required="required">
+    <label for="charClass">Character Class</label>
+    <select name="charClass" id="charClass" required="required">
+        <option value="Archer">Archer</option>
+        <option value="Bard">Bard</option>
+        <option value="Healer">Healer</option>
+        <option value="Mage">Mage</option>
+        <option value="Warrior">Warrior</option>
+    </select>
+    <label for="image">Image</label>
+    <input name="image" id="image" type="text" required="required">
+    <input class="noshow" name="sp" value="5">
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

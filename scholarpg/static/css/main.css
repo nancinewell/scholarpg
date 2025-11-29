@@ -1,0 +1,229 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr 9fr;
+    font-family: Arial, Helvetica, sans-serif;
+}
+textarea{
+    font-family: Arial, Helvetica, sans-serif;
+}
+header{
+    background-color: #940000;
+    margin: 0 0 1em 0;
+    padding: 1rem;
+    width: 100vw;
+    color: white;
+}
+.noshow{
+    display: none;
+}
+
+#msg{
+    color: #940000;
+    justify-self: center;
+}
+/* * * * * * * * * NAV * * * * * * * */
+header nav ul{
+    margin: .5rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+header nav ul li{
+    list-style: none;
+    margin-right: 2em;
+}
+
+header nav ul li a{
+    color: #ffd5d5;
+    text-decoration: none;
+}
+
+header nav ul li a:hover{
+    color: #ff8a8a;
+}
+
+main{
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.headline-div{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.just-left{
+    justify-self: start;
+}
+
+/* * * * * * * * * FORMS * * * * * * * */
+
+form{
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 1em;
+    justify-self: center;
+    /* align-self:start; */
+}
+form input, label, select, button, textarea{
+    margin-bottom: 1em;
+    padding: .5em;
+}
+
+form button{
+    background-color: #940000;
+    color: #ffd5d5;
+    border-radius: 5px;
+    border-color: #450000;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+/* * * * * * * * * STUDENT DISPLAY * * * * * * * */
+
+.student-display{
+    width: 500px;
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    padding: 10px;
+}
+.student-display-name{
+    grid-area: 1 / 2;
+    padding: 10px;
+}
+
+.student-display-level{
+    grid-area: 2 / 2;
+    padding: 10px;
+}
+.student-display-charClass{
+    padding: 10px;
+    grid-area: 3 / 2;
+}
+.student-display-stats{
+    padding: 10px;
+    grid-area: 4 / 2;
+    display: flex;
+    justify-content: space-between;
+}
+
+.student-display-image{
+    padding: 10px;
+    width: 200px;
+    grid-area: 1 / 1 / span 4;
+    border-radius: 25px;
+}
+
+.delete_msg{
+    font-size: 2em;
+    color: #450000;
+    text-align: center;
+    margin: 1em;
+}
+
+.button-div{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.button-div form{
+    padding: 0;
+}
+
+.centered-msg{
+    text-align: center;
+}
+
+.list{
+    margin: 1em;
+}
+
+.list-item{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    background-color: #ffecec;
+    border-radius: 25px;
+}
+
+.list-item form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.list-button{
+    padding: 0;
+}
+.view-student-header{
+    text-align: center;
+    padding: 1em 0;
+}
+/* * * * * * * * * CARDS * * * * * * * */
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card{
+    width: 230px;
+    padding: 10px;
+    border: 3px solid #450000 ;
+    border-radius: 25px;
+    margin: 1em;
+    text-align: center;
+}
+.card>*{
+    padding: 10px;
+}
+.card-title{
+    font-weight: bold;
+}
+.card-pieces{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    text-align: center;
+    padding: 10px;
+}
+.card-image{
+    width: 200px;
+    grid-area: 2 / 1;
+    border-radius: 25px;
+}
+
+.card a{
+    text-decoration: none;
+    color: black;
+}
+
+.card a:hover{
+    color: #450000;
+    font-weight: bold;
+}
+
+.two-list-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    justify-items: center;
+}
+
+
+/* * * * * * * * * RANDOM EVENT * * * * * * * */
+.random-event>*{
+    padding: 10px;
+    max-width: 700px;
+}

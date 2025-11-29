@@ -1,0 +1,26 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<h2>Add Skill</h2>
+<form action="../add_skill/" method="POST">
+    {% csrf_token %}
+    <label for="charClass">Class</label>
+    <select name="charClass" id="charClass" required="required">
+        <option value="Archer">Archer</option>
+        <option value="Bard">Bard</option>
+        <option value="Healer">Healer</option>
+        <option value="Mage">Mage</option>
+        <option value="Warrior">Warrior</option>
+    </select>
+    <label for="title">Title</label>
+    <input name="title" id="title" type="text" required="required">
+    <label for="desc">Description</label>
+    <textarea name="desc" id="desc" rows="5" required="required"></textarea>
+    <label for="sp">SP Cost</label>
+    <input name="sp" id="sp" type="number" required="required">
+    <label for="levelReq">Level Requirement</label>
+    <input name="levelReq" id="levelReq" type="number" required="required">
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

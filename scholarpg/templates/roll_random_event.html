@@ -1,0 +1,39 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<div class="headline-div">
+    <h2>Today's Random Event!</h2>
+    <form class="form-button" action="/view_random_events">
+        <button type="submit">All Events</button>
+    </form>
+</div>
+<div class="random-event">
+<p class="card-title">{{event.title}}</p>
+<p>{{event.desc}}</p>
+
+{% if event.charClass == "None" %}
+
+{% else %}
+<p>Limited to the {{event.charClass}}s</p>
+{% endif %}
+
+{% if event.randomStudent %}
+<p>Random Student: {{student.name}}</p>
+{% endif %}
+
+<div class="card-pieces">
+    <div>
+        <p>XP</p>
+        <p>{{event.xp}}</p>
+    </div>
+    <div>
+        <p>GP</p>
+        <p> {{event.gp}}</p>
+    </div>
+    <div>
+        <p>SP</p>
+        <p> {{event.sp}}</p>
+    </div>        
+</div>
+</div>
+{% endblock %}

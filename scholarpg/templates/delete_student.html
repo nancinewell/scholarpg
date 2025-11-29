@@ -1,0 +1,26 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<h2>Delete Student</h2>
+<div>
+    <div class="student-display">
+        <p class="student-display-name">Name: {{ student.name }}</p>
+        <p class="student-display-level">Level:  {{student.level}}</p>
+        <p class="student-display-charClass">Class: {{student.charClass}}</p>
+        <img src="../static/img/avatars/{{student.image}}.jpg" class="student-display-image">
+        <div class="student-display-stats">
+            <p>XP: {{student.xp}}</p>
+            <p>GP: {{student.gp}}</p>
+            <p>SP: {{student.sp}}</p>
+        </div>
+    </div>
+    <p class="delete_msg">ARE YOU SURE?</p>
+    <p class="delete_msg">If you delete the student, it cannot be undone.</p>
+    <div>
+        <form class="form-button" action="../../delete_student/{{student.pk}}" method="POST">
+            {% csrf_token %}
+            <button type="submit" value="delete">Delete Student</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

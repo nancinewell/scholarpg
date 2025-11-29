@@ -1,0 +1,18 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<h2>Update Behavior</h2>
+<form action="../update_behavior/{{behavior.pk}}" method="POST">
+    {% csrf_token %}
+    <label for="title">Title</label>
+    <input name="title" id="title" type="text" value={{behavior.title}} required="required">
+    <label for="desc">Description</label>
+    <textarea name="desc" id="desc" rows="5">{{behavior.desc}} required="required"</textarea>
+    <label for="xp">Award XP</label>
+    <input name="xp" id="xp" type="number" value={{behavior.xp}} required="required">
+    <label for="gp">Award GP</label>
+    <input name="gp" id="gp" type="number" value={{behavior.gp}} required="required">
+    <button type="submit" value="update">Submit</button>
+</form>
+
+{% endblock %}

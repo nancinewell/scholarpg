@@ -1,0 +1,23 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<h2>Update Student</h2>
+<form action="../update_student/{{student.pk}}" method="POST">
+    {% csrf_token %}
+    <label for="name">Student Name</label>
+    <input name="name" id="name" type="text" value={{student.name}} required="required">
+    <label for="charClass">Character Class</label>
+    <select name="charClass" id="charClass" value={{student.charClass}} required="required">
+        <option value="Archer" {% if student.charClass == "Archer" %}selected{%endif%}>Archer</option>
+        <option value="Bard" {% if student.charClass == "Bard" %}selected{%endif%}>Bard</option>
+        <option value="Healer"{% if student.charClass == "Healer" %}selected{%endif%}>Healer</option>
+        <option value="Mage" {% if student.charClass == "Mage" %}selected{%endif%}>Mage</option>
+        <option value="Warrior" {% if student.charClass == "Warrior" %}selected{%endif%}>Warrior</option>
+    </select>
+    <label for="image">Image</label>
+    <input name="image" id="image" type="text"  value={{student.image}} required="required">
+    <button type="submit" value="update">Submit</button>
+</form>
+
+{% endblock %}
+

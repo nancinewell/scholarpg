@@ -1,0 +1,18 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<h2>Add Behavior</h2>
+<form action="../add_behavior/" method="POST">
+    {% csrf_token %}
+    <label for="title">Title</label>
+    <input name="title" id="title" type="text" required="required">
+    <label for="desc">Description</label>
+    <textarea name="desc" id="desc" rows="5" required="required"></textarea>
+    <label for="xp">Award XP</label>
+    <input name="xp" id="xp" type="number" required="required">
+    <label for="gp">Award GP</label>
+    <input name="gp" id="gp" type="number" required="required">
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<div class="headline-div">
+    <h2>Students</h2>
+    <form class="form-button" action="/add_student_form">
+        <button type="submit">Add Student</button>
+    </form>
+</div>
+<div class="cards">
+{% for student in students %}
+    <div class="card"><a href="view_student/{{student.pk}}">
+        <div class="card-pieces">
+            <p class="card-name">{{ student.name }}</p>
+            <p>{{student.level}}</p>
+            <p> {{student.charClass}}</p>
+        </div>
+        <img src="static/img/avatars/{{student.image}}.jpg" class="card-image">
+        <div class="card-pieces">
+            <div>
+                <p>XP</p>
+                <p>{{student.xp}}</p>
+            </div>
+            <div>
+                <p>GP</p>
+                <p> {{student.gp}}</p>
+            </div>
+            <div>
+                <p>SP</p>
+                <p> {{student.sp}}</p>
+            </div>        
+        </div>
+        </a>
+    </div>
+{% endfor %}
+</div>
+
+
+{% endblock %}
+
+<div class="card-pieces">
+            
+            
+        </div>

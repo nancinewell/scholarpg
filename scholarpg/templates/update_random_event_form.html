@@ -1,0 +1,34 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<h2>Update Random Event</h2>
+<form action="../update_random_event/{{event.pk}}" method="POST">
+    {% csrf_token %}
+    <label for="title">Title</label>
+    <input name="title" id="title" type="text" value="{{event.title}}" required="required">
+    <label for="desc">Description</label>
+    <textarea name="desc" id="desc" rows="5">{{event.desc}} required="required"</textarea>
+    <label for="xp">Give XP</label>
+    <input name="xp" id="xp" type="number" value="0" value="{{event.xp}}" required="required">
+    <label for="gp">Give GP</label>
+    <input name="gp" id="gp" type="number" value="0" value="{{event.gp}}" required="required">
+    <label for="sp">Give SP</label>
+    <input name="sp" id="sp" type="number" value="0" value="{{event.sp}}" required="required">
+    <label for="randomStudent">Limit Effect to One Random Student</label>
+    <select name="randomStudent" id="randomStudent" required="required">
+        <option value="False" {% if event.randomStudent == False %}selected{%endif%}>No</option>
+        <option value="True" {% if event.randomStudent == True %}selected{%endif%}>Yes</option>
+    </select>
+    <label for="charClass">Limit Effect to One Class</label>
+    <select name="charClass" id="charClass" required="required">
+        <option value="None" {% if event.charClass == "None" %}selected{%endif%}>None</option>
+        <option value="Archer" {% if event.charClass == "Archer" %}selected{%endif%}>Archer</option>
+        <option value="Bard" {% if event.charClass == "Bard" %}selected{%endif%}>Bard</option>
+        <option value="Healer"{% if event.charClass == "Healer" %}selected{%endif%}>Healer</option>
+        <option value="Mage" {% if event.charClass == "Mage" %}selected{%endif%}>Mage</option>
+        <option value="Warrior" {% if event.charClass == "Warrior" %}selected{%endif%}>Warrior</option>
+    </select>
+    <button type="submit" value="update">Submit</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "main_template.html" %}
+{% block title %}SCHOLARPG{% endblock %}
+{% block content %}
+<h2>Update Skill</h2>
+<form action="../update_skill/" method="POST">
+    {% csrf_token %}
+    <label for="charClass">Class</label>
+    <select name="charClass" id="charClass" required="required">
+        <option value="Archer" {% if skill.charClass == "Archer" %}selected{%endif%}>Archer</option>
+        <option value="Bard" {% if skill.charClass == "Bard" %}selected{%endif%}>Bard</option>
+        <option value="Healer"{% if skill.charClass == "Healer" %}selected{%endif%}>Healer</option>
+        <option value="Mage" {% if skill.charClass == "Mage" %}selected{%endif%}>Mage</option>
+        <option value="Warrior" {% if skill.charClass == "Warrior" %}selected{%endif%}>Warrior</option>
+    </select>
+    <label for="title">Title</label>
+    <input name="title" id="title" type="text" value="{{skill.title}}" required="required">
+    <label for="desc">Description</label>
+    <textarea name="desc" id="desc" rows="5">{{skill.desc}} required="required"</textarea>
+    <label for="sp">SP Cost</label>
+    <input name="sp" id="sp" type="number" value="{{skill.sp}}" required="required">
+    <label for="levelReq">Level Requirement</label>
+    <input name="levelReq" id="levelReq" type="number" value="{{skill.levelReq}}" required="required">
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}
