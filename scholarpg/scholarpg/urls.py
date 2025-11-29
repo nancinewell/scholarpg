@@ -68,4 +68,5 @@ urlpatterns = [
     path('update_miracle/<int:pk>', views.update_miracle, name='update'),
     path('delete_miracle_form/<int:pk>', views.delete_miracle_form),
     path('delete_miracle/<int:pk>', views.delete_miracle, name='delete'),
+    
 ]

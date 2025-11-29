@@ -44,11 +44,19 @@ def add_student(req):
     if req.method == 'POST':
         #get the form
         form = StudentForm(req.POST)
-        #if it's valid, save it and send back the confirmation
+        #if it's valid...
         if form.is_valid():
-            form.save()
-            context = {'h2': 'Student Added'}
-            return render(req, "confirmation.html", context)
+            #try to save
+            try:
+                form.save()
+                #send to confirmation page
+                context = {'h2': 'Student Added'}
+                return render(req, "confirmation.html", context)
+            #if fail, reload with error msg
+            except:
+                form = StudentForm()
+                context={'form': form, 'msg': "Please fill out the form entirely"}
+                return render(req, "add_student_form.html", context)    
         #if not valid (which should never happen since there's validation in the form itself)
         #reload the form with a msg to fill it out properly
         else:
@@ -82,14 +90,18 @@ def update_student(req, pk):
         student.name = name
         student.image = image
         student.charClass = charClass
-        #save the student with the new info
-        student.save()
-        #send to the confirmation page
-        context = {
-            'msg': "Student Updated",
-            'student': student
-        }
-        return render(req, "view_student.html", context)
+        #try save the student with the new info
+        try:
+            student.save()
+            #send to the confirmation page
+            context = {
+                'h2': f"{student.name} Updated"
+            }
+            return render(req, "confirmation.html", context)
+        # if fail, reload with error msg
+        except:
+            context = {"student": student, "msg": "There was an error. Student not updated."}
+            return render(req, "update_student_form.html", context)
     #if not, send back to the update student page with an error msg
     else:
         context = {"student": student, "msg": "There was an error. Student not updated."}
@@ -109,11 +121,16 @@ def delete_student(req, pk):
     student = Student.objects.get(pk=pk)
     #ensure request sent via post
     if req.method == "POST":
-        #delete the student
-        student.delete()
-        #send to confirmation page
-        context = {"h2": "Student Deleted"}
-        return render(req, "confirmation.html", context)
+        #try to delete the student
+        try:
+            student.delete()
+            #send to confirmation page
+            context = {"h2": "Student Deleted"}
+            return render(req, "confirmation.html", context)
+        #if fail, reload with error msg
+        except:
+            context = {"student": student, "msg": "There was an error. Student not deleted."}
+            return render(req, 'delete_student.html', context)
     #if not, reload the page with an error message
     else: 
         context = {"student": student, "msg": "There was an error. Student not deleted."}
@@ -148,11 +165,16 @@ def add_behavior(req):
         form = BehaviorForm(req.POST)
         #if the form is valid (which it should be since there's validation on the form)
         if form.is_valid():
-            #save it
-            form.save()
-            #send to confirmation page
-            context={'h2':'Behavior Added'}
-            return render(req, 'confirmation.html', context)
+            #try to save it
+            try:
+                form.save()
+                #send to confirmation page
+                context={'h2':'Behavior Added'}
+                return render(req, 'confirmation.html', context)
+            except:
+                form = BehaviorForm()
+                context={'form': form, 'msg': "Something went wrong. Behavior not added"}
+                return render(req, "add_behavior_form.html", context)
     #if not, reload the form with an error msg
     else:
         form = BehaviorForm()
@@ -182,11 +204,16 @@ def update_behavior(req, pk):
         behavior.desc = desc
         behavior.xp = xp
         behavior.gp = gp
-        #save the new behavior info
-        behavior.save()
-        #send to confirmation page
-        context = {'h2': "Behavior Updated"}
-        return render(req, "confirmation.html", context)
+        #try to save the new behavior info
+        try:
+            behavior.save()
+            #send to confirmation page
+            context = {'h2': "Behavior Updated"}
+            return render(req, "confirmation.html", context)
+        #if fail, reload the page with an error msg
+        except:
+            context = {"behavior": behavior, "msg": "There was an error. Behavior not updated."}
+            return render(req, "update_behavior_form.html", context)
     #if not, reload the page with an error msg
     else:
         context = {"behavior": behavior, "msg": "There was an error. Behavior not updated."}
@@ -207,10 +234,15 @@ def delete_behavior(req, pk):
     #ensure request sent via POST
     if req.method == "POST":
         # delete the behavior
-        behavior.delete()
-        #send to confirmation page
-        context = {"h2": "Behavior Deleted"}
-        return render(req, "confirmation.html", context)
+        try:
+            behavior.delete()
+            #send to confirmation page
+            context = {"h2": "Behavior Deleted"}
+            return render(req, "confirmation.html", context)
+        #if fail, reload page with error msg
+        except: 
+            context = {"behavior": behavior, "msg": "There was an error. Behavior not deleted."}
+            return render(req, 'delete_behavior.html', context)
     #if not, reload page with error msg
     else: 
         context = {"behavior": behavior, "msg": "There was an error. Behavior not deleted."}
@@ -232,11 +264,16 @@ def award_behavior(req):
         student.xp += behavior.xp
         #increment student gp by the amount stated in the behavior
         student.gp += behavior.gp
-        #save the student
-        student.save()
-        #send to confirmation page
-        context = {"h2": f"{behavior.title} Awarded! +{behavior.xp} XP & {behavior.gp} GP"}
-        return render(req, "confirmation.html", context)
+        try:
+            #save the student
+            student.save()
+            #send to confirmation page
+            context = {"h2": f"{behavior.title} Awarded! +{behavior.xp} XP & {behavior.gp} GP"}
+            return render(req, "confirmation.html", context)
+        #if fail, reload with error msg.
+        except:
+            context = {"student": student, "msg": "There was an error. Behavior not awarded."}
+            return render(req, "view_student.html", context)
     #if not, reload page with error msg
     else: 
         context = {"student": student, "msg": "There was an error. Behavior not awarded."}
@@ -273,11 +310,17 @@ def add_skill(req):
         form = SkillForm(req.POST)
         #if it's valid (which it should be. Validation on form)
         if form.is_valid():
-            #save it
-            form.save()
-            #send to confirmation page
-            context={'h2':'Skill Added'}
-            return render(req, 'confirmation.html', context)
+            #try to save it
+            try:
+                form.save()
+                #send to confirmation page
+                context={'h2':'Skill Added'}
+                return render(req, 'confirmation.html', context)
+            #if fail, reload form with error message
+            except:
+                form = SkillForm()
+                context={'form': form, 'msg': "Somethign went wrong. Skill not added"}
+                return render(req, "add_skill_form.html", context)
     #if not, reload form with error message
     else:
         form = SkillForm()
@@ -309,11 +352,16 @@ def update_skill(req, pk):
         skill.charClass = charClass
         skill.sp = sp
         skill.levelReq = levelReq
-        #save skill with new info
-        skill.save()
-        #send to confirmation page
-        context = {'h2': "Skill Updated"}
-        return render(req, "confirmation.html", context)
+        #try to save skill with new info
+        try:
+            skill.save()
+            #send to confirmation page
+            context = {'h2': "Skill Updated"}
+            return render(req, "confirmation.html", context)
+        #if fail, reload form with error message
+        except:
+            context = {"skill": skill, "msg": "There was an error. Skill not updated."}
+            return render(req, "update_skill_form.html", context)
     #if not, reload form with error message
     else:
         context = {"skill": skill, "msg": "There was an error. Skill not updated."}
@@ -332,11 +380,16 @@ def delete_skill(req, pk):
     skill = Skills.objects.get(pk=pk)
     #ensure request sent via POST
     if req.method == "POST":
-        #delete skill
-        skill.delete()
-        #send to confirmation page
-        context = {"h2": "Skill Deleted"}
-        return render(req, "confirmation.html", context)
+        #try to delete skill
+        try:
+            skill.delete()
+            #send to confirmation page
+            context = {"h2": "Skill Deleted"}
+            return render(req, "confirmation.html", context)
+        #if fail, reload form with error message
+        except: 
+            context = {"skill": skill, "msg": "There was an error. Skill not deleted."}
+            return render(req, 'delete_skill.html', context)
     #if not, reload form with error message
     else: 
         context = {"skill": skill, "msg": "There was an error. Skill not deleted."}
@@ -358,11 +411,16 @@ def use_skill(req):
         if student.sp >= skill.sp:
             #decrement student's SP based on skill's SP cost
             student.sp -= skill.sp
-            #save student
-            student.save()
-            #send to confirmation page
-            context = {'h2': f"Skill Used. {student.name}'s SP = {student.sp}"}
-            return render(req, "confirmation.html", context)
+            #try to save student
+            try:
+                student.save()
+                #send to confirmation page
+                context = {'h2': f"Skill Used. {student.name}'s SP = {student.sp}"}
+                return render(req, "confirmation.html", context)
+            #if fail, reload the page with error message
+            except: 
+                context = {"student": student, "msg": "There was an error. Skill not used."}
+                return render(req, 'view_student.html', context)
         #if not enough SP, render page with msg
         else: 
             context = {'student': student, 'msg': "Not enough SP to use that skill."}
@@ -382,6 +440,7 @@ def view_classroom_tools(req):
 
 #load page to roll a random event
 def view_random_event(req):
+    msg=''
     #if there are random events...
     if RandomEvents.objects.exists():
         #get all students
@@ -433,7 +492,12 @@ def view_random_event(req):
                 #if it pushes them over the max, set to max.
                 if student.sp > student.maxSP:
                     student.sp = student.maxSP
-                student.save()
+                #try to save the student
+                try:
+                    student.save()
+                except:
+                    msg += f"SP was not saved for {student}. Manually add it.\n"
+
             #limited students get more sp. 
             #If limited to charClass, but not a random student, give sp
             if event.charClass != "None" and not event.randomStudent:
@@ -444,7 +508,10 @@ def view_random_event(req):
                     #if it pushes them over the max, set to max.
                     if student.sp > student.maxSP:
                         student.sp = student.maxSP
-                    student.save()
+                    try:
+                        student.save()
+                    except:
+                        msg += f"SP was not saved for {student}. Manually add it.\n"
             #If limited to just one student, give sp
             if event.randomStudent:
                 #if there is a random Student
@@ -453,7 +520,10 @@ def view_random_event(req):
                     #if it pushes them over the max, set to max.
                     if randomStudent.sp > randomStudent.maxSP:
                         randomStudent.sp = randomStudent.maxSP
-                    randomStudent.save()
+                    try:
+                        randomStudent.save()
+                    except: 
+                        msg += f"SP was not saved for {student}. Manually add it.\n"
         #if event gives xp
         if event.xp > 0:
             #If limited to charClass, but not a random student, give xp
@@ -462,18 +532,29 @@ def view_random_event(req):
                 if students.count()>0:
                     for student in students:
                         student.xp += event.xp
-                        student.save()
+                        #try to save the student
+                        try:
+                            student.save()
+                        except:
+                            msg += f"{event.xp}XP was not saved for {student}. Manually add it.\n"
             #else if limited to just one student, give xp
             elif event.randomStudent:
                 #if there is a random student
                 if randomStudent:
                     randomStudent.xp += event.xp
-                    randomStudent.save()
+                    #try to save student
+                    try:
+                        randomStudent.save()
+                    except:
+                        msg += f"{event.xp}XP was not saved for {randomStudent}. Manually add it.\n"
             #otherwise everyone gets some
             else:
                 for student in allStudents:
                     student.xp += event.xp
-                    student.save()
+                    try:
+                        student.save()
+                    except:
+                        msg += f"{event.xp}XP was not saved for {student}. Manually add it.\n"
         #if event gives gold
         if event.gp > 0:
             #If limited to charClass, but not a random student, give gp
@@ -482,23 +563,32 @@ def view_random_event(req):
                 if students.count()>0:
                     for student in students:
                         student.gp += event.gp
-                        student.save()
+                        try:
+                            student.save()
+                        except:
+                            msg += f"{event.gp}GP was not saved for {student}. Manually add it.\n"
             #else if limited to just one student, give gp
             elif event.randomStudent:
                 #if there is a random student
                 if randomStudent:
                     randomStudent.gp += event.gp
-                    randomStudent.save()
+                    try:
+                        randomStudent.save()
+                    except:
+                            msg += f"{event.gp}GP was not saved for {randomStudent}. Manually add it.\n"
             #otherwise everyone gets some
             else:
                 for student in allStudents:
                     student.gp += event.gp
-                    student.save()
+                    try:
+                        student.save()
+                    except:
+                            msg += f"{event.gp}GP was not saved for {student}. Manually add it.\n"
         #set the context
         if event.randomStudent:
             context = {'event': event, 'student': randomStudent}
         else:
-            context = {'event': event}
+            context = {'event': event, 'msg': msg}
         #send event info to be rendered
         return render(req, 'roll_random_event.html', context)
     #if there are no random events, just display the events page. You can't pull one from nothing.
@@ -531,11 +621,17 @@ def add_random_event(req):
         form = RandomEventForm(req.POST)
         #if it's valid (it should be. validation on form)
         if form.is_valid():
-            #save form
-            form.save()
-            #send to confirmation page
-            context={'h2':'Random Event Added'}
-            return render(req, 'confirmation.html', context)
+            #try to save form
+            try:
+                form.save()
+                #send to confirmation page
+                context={'h2':'Random Event Added'}
+                return render(req, 'confirmation.html', context)
+            #if fail, reload page with error msg
+            except:
+                form = RandomEventForm()
+                context={'form': form, 'msg': 'Something went wrong. Random Event not added.'}
+                return render(req, "add_random_event_form.html", context)
     #if not, reload page with error msg
     else:
         form = RandomEventForm()
@@ -576,11 +672,16 @@ def update_random_event(req, pk):
         event.sp = sp
         event.xp = xp
         event.gp = gp
-        #save event
-        event.save()
-        #send to confirmation page
-        context = {'h2': "Random Event Updated"}
-        return render(req, "confirmation.html", context)
+        #try to save event
+        try:
+            event.save()
+            #send to confirmation page
+            context = {'h2': "Random Event Updated"}
+            return render(req, "confirmation.html", context)
+        #if fail reload page with error msg
+        except: 
+            context = {"event": event, "msg": "There was an error. Event was not updated."}
+            return render(req, "update_random_event_form.html", context)
     #if not reload page with error msg
     else: 
         context = {"event": event, "msg": "There was an error. Event was not updated."}
@@ -600,11 +701,16 @@ def delete_random_event(req, pk):
     event = RandomEvents.objects.get(pk=pk)
     #ensure request sent via POST
     if req.method == "POST":
-        #delete event
-        event.delete()
-        #send to confirmation page
-        context = {"h2": "Event Deleted"}
-        return render(req, "confirmation.html", context)
+        #try to delete event
+        try:
+            event.delete()
+            #send to confirmation page
+            context = {"h2": "Event Deleted"}
+            return render(req, "confirmation.html", context)
+        #if fail, reload page with error msg
+        except:
+            context = {"event": event, "msg": "There was an error. Event was not deleted."}
+            return render(req, 'delete_random_event.html', context)
     #if not, reload page with error msg
     else: 
         context = {"event": event, "msg": "There was an error. Event was not deleted."}
@@ -691,11 +797,17 @@ def add_miracle(req):
         form = MiracleForm(req.POST)
         #if it's valid (should be- validation on form)
         if form.is_valid():
-            #save form
-            form.save()
-            #send to confirmation page
-            context={'h2':'Miracle Added'}
-            return render(req, 'confirmation.html', context)
+            #try to save form
+            try:
+                form.save()
+                #send to confirmation page
+                context={'h2':'Miracle Added'}
+                return render(req, 'confirmation.html', context)
+            #if fail, reload page with error msg
+            except:
+                form = MiracleForm()
+                context={'form': form, 'msg': 'Something went wrong. Miracle was not added.'}
+                return render(req, "add_miracle_form.html", context)
     #if not, reload page with error msg
     else:
         form = MiracleForm()
@@ -727,11 +839,16 @@ def update_miracle(req, pk):
         miracle.sp = sp
         miracle.xp = xp
         miracle.gp = gp
-        #save miracle
-        miracle.save()
-        #send to confirmation page
-        context = {'h2': "Miracle Updated"}
-        return render(req, "confirmation.html", context)
+        #try to save miracle
+        try:
+            miracle.save()
+            #send to confirmation page
+            context = {'h2': "Miracle Updated"}
+            return render(req, "confirmation.html", context)
+        #if fail, reload page with error msg
+        except:
+            context = {"miracle": miracle, "msg": "There was an error. Miracle was not updated."}
+            return render(req, "update_miracle_form.html", context)
     #if not, reload page with error msg
     else:
         context = {"miracle": miracle, "msg": "There was an error. Miracle was not updated."}
@@ -751,11 +868,16 @@ def delete_miracle(req, pk):
     miracle = Miracles.objects.get(pk=pk)
     #ensure request sent via post
     if req.method == "POST":
-        #delete miracle
-        miracle.delete()
-        #send to confirmation page
-        context = {"h2": "Miracle Deleted"}
-        return render(req, "confirmation.html", context)
+        #try to delete miracle
+        try:
+            miracle.delete()
+            #send to confirmation page
+            context = {"h2": "Miracle Deleted"}
+            return render(req, "confirmation.html", context)
+        #if fail, reload page with error msg
+        except:
+            context = {"miracle": miracle, "msg": "There was an error. Miracle was not deleted."}
+            return render(req, 'delete_miracle.html', context)
     #if not, reload page with error msg
     else: 
         context = {"miracle": miracle, "msg": "There was an error. Miracle was not deleted."}

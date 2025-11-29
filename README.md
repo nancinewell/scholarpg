@@ -11,26 +11,29 @@ As always, I try to use my learning to forward my homeschool. My children and I 
 
 {Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the software running (starting the server and navigating through the web pages) and a walkthrough of the code.}
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/jStxUn6iK6A)
 
 # Web Pages
+This app contains 5 database tables: Students, Behaviors, Skills, RandomEvents, and Miracles. 
+Each table has a page to view all, add, update, and delete, and Student has a view one page. There's also a confirmation page. 
 
-{Describe each of the web pages you created and how the web app transitions between each of them.  Also describe what is dynamically created on each page.}
+Each one is called by a URL that is accepted by the urls.py file and redirected to the views file with a function call that will accept the request, usually will do something with it, and will render the appropriate page. 
+
+On any view, update, or delete page will get student (or other applicable) infomration and send object(s) with the information to dynamically populate the information on the page when it is rendered. EG: On the view_student page, the student is retrieved and sent as an object to the page. Then where the page requires the student name, it is retrieved with the command {{student.name}}. 
 
 # Development Environment
 I wrote this program in the IDE Visual Studio Code version 1.105.1 with 4 extensions to make it more friendly to Python: Pylance, Python, Python Debugger, and Python Environments.
 
-I wrote this program using Python and Django as the web framework. 
+I wrote this program using Python and Django as the web framework, and utilized built in sqlite3.
 
 # Useful Websites
-
-{Make a list of websites that you found helpful in this project}
-* [Web Site Name](http://url.link.goes.here)
-* [Web Site Name](http://url.link.goes.here)
+* [Django Tutorial for Beginners – Build Powerful Backends (video)](https://www.youtube.com/watch?v=rHux0gMZ3Eg)
+* [Python Django Introduction and Beginners Tutorial (video)](https://www.youtube.com/watch?v=qcJZN1pvG6A)
+* [Tutorialspoint](https://www.tutorialspoint.com/django/index.htm)
+* [W3Schools](https://www.w3schools.com/django)
+* [Django Project](https://docs.djangoproject.com/)
 
 # Future Work
-
-{Make a list of things that you need to fix, improve, and add in the future.}
 * I want to add a shop for the kids to spend their gold on.
 * I want to add a pet shop. Each pet has powers (something we're currently manageing with the spreadsheet)
-* Item 3
+* I want to incorporate the boss battles and character quiz that I completed in separate projects (not all were written in Python) so that we have one app for everything!
