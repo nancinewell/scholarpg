@@ -2,7 +2,7 @@
 {% block title %}SCHOLARPG{% endblock %}
 {% block content %}
 <h2>Update Skill</h2>
-<form action="../update_skill/" method="POST">
+<form action="../update_skill/{{skill.pk}}" method="POST">
     {% csrf_token %}
     <label for="charClass">Class</label>
     <select name="charClass" id="charClass" required="required">
