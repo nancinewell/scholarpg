@@ -7,7 +7,7 @@
 body{
     min-height: 100vh;
     display: grid;
-    grid-template-rows: 1fr 9fr;
+    grid-template-rows: 120px 1fr;
     font-family: Arial, Helvetica, sans-serif;
 }
 textarea{
